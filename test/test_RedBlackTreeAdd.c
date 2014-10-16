@@ -59,7 +59,7 @@ void test_addRedBlackTree_add_5_to_tree_with_root_10(void)
   TEST_ASSERT_EQUAL_PTR(root, &node10);
   //                     left    right color  node
   TEST_ASSERT_EQUAL_NODE(&node5, NULL, 'b', &node10);
-  TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node10);
+  TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node5);
 }
 
 /**
@@ -80,6 +80,6 @@ void test_addRedBlackTree_add_13_to_tree_with_root_10(void)
   
   TEST_ASSERT_EQUAL_PTR(root, &node10);
   //                     left    right color  node
-  TEST_ASSERT_EQUAL_NODE(&node13, NULL, 'b', &node10);
+  TEST_ASSERT_EQUAL_NODE(NULL, &node13, 'b', &node10);
   TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node13);
 }

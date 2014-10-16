@@ -5,6 +5,7 @@
 #include "Node.h"
 #include "InitNode.h"
 
-void addRedBlackTree(Node **rootPtr, Node *newNode);
+void addRedBlackTree(Node **nodePtr, Node *newNode);
+void _addRedBlackTree(Node **nodePtr, Node *newNode);
 
 #endif // RedBlackTree_H
