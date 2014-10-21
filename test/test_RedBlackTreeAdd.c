@@ -120,7 +120,7 @@ void test_addRedBlackTree_add_5_to_a_tree_with_root_10_and_left_child_7(void)
  *                             /  \                    /
  *                                8(r)               7(r)
  */
-void test_addRedBlackTree_add_8_to_a_tree_withroot_10_and_left_child_7(void)
+void test_addRedBlackTree_add_8_to_a_tree_with_root_10_and_left_child_7(void)
 {
   setNode(&node7, NULL, NULL, 'r');
   setNode(&node8, NULL, NULL, 'r');
@@ -132,5 +132,78 @@ void test_addRedBlackTree_add_8_to_a_tree_withroot_10_and_left_child_7(void)
   TEST_ASSERT_EQUAL_PTR(root, &node8);
   TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node10);
   TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node7);
-  TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'b', &node8);
+  TEST_ASSERT_EQUAL_NODE(&node7, &node10, 'b', &node8);
+}
+
+/**
+ *         root                      root 
+ *          |                         |
+ *          v                         v
+ *         10(b)      add 13         10(b)
+ *        /   \     ---------->     /   \
+ *      7(r)                      7(r)   13(r)
+ */
+void test_addRedBlackTree_add_13_to_a_tree_with_root_10_and_left_child_7(void)
+{
+  setNode(&node7, NULL, NULL, 'r');
+  setNode(&node13, NULL, NULL, 'r');
+  setNode(&node10, &node7, NULL, 'b');
+  Node *root = &node10;
+  
+  addRedBlackTree(&root, &node13);
+  
+  TEST_ASSERT_EQUAL_PTR(root, &node10);
+  TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node7);
+  TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node13);
+  TEST_ASSERT_EQUAL_NODE(&node7, &node13, 'b', &node10);
+}
+
+/**
+ *        root                        root                           root
+ *         |                           |                              |
+ *         v                           v             rotate           v
+ *        10(b)        add 15         10(b)           left           13(b)
+ *           \       ---------->         \         ------------>    /   \
+ *           13(r)                       13(r)                   10(r)   15(r)
+ *                                         \
+ *                                         15(r)
+ */
+void test_addRedBlackTree_add_15_to_a_tree_with_root_10_and_right_child_13(void)
+{
+  setNode(&node13, NULL, NULL, 'r');
+  setNode(&node15, NULL, NULL, 'r');
+  setNode(&node10, NULL, &node13, 'b');
+  Node *root = &node10;
+  
+  addRedBlackTree(&root, &node15);
+  
+  TEST_ASSERT_EQUAL_PTR(root, &node13);
+  TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node10);
+  TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node15);
+  TEST_ASSERT_EQUAL_NODE(&node10, &node15, 'b', &node13);
+}
+
+/**
+ *        root                           root                             root                           root
+ *         |                              |                                |                              |
+ *         v                              v              rotate            v            rotate            v
+ *        10(b)          add 15          10(b)            right           10(b)          left            15(b)
+ *           \        ------------>          \        ------------->         \        ---------->       /    \
+ *           17(r)                            17(r)                          15(r)                    10(r)  17(r)
+ *                                            /                                 \
+ *                                         15(r)                                17(r)
+ */
+void test_addRedBlackTree_add_15_to_a_tree_with_root_10_and_right_child_17(void)
+{
+  setNode(&node17, NULL, NULL, 'r');
+  setNode(&node15, NULL, NULL, 'r');
+  setNode(&node10, NULL, &node17, 'b');
+  Node *root = &node10;
+  
+  addRedBlackTree(&root, &node15);
+  
+  TEST_ASSERT_EQUAL_PTR(root, &node15);
+  TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node10);
+  TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node17);
+  TEST_ASSERT_EQUAL_NODE(&node10, &node17, 'b', &node15);
 }
