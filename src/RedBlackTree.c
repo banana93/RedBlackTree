@@ -22,13 +22,13 @@ void _addRedBlackTree(Node **nodePtr, Node *newNode)
   if(newNode->data < (*nodePtr)->data)
   {
     _addRedBlackTree(&(*nodePtr)->left, newNode);
-    solveViolationForNewNodeLessThan(&(*nodePtr));
+    solveViolationForNewNodeLessThan(&(*nodePtr)); // this function purpose is to solve the violation for those new node data that is less than the nodePtr data
   }
   
   else
   {
     _addRedBlackTree(&(*nodePtr)->right, newNode); 
-    solveViolationForNewNodeMoreThan(&(*nodePtr));    
+    solveViolationForNewNodeMoreThan(&(*nodePtr)); // this function purpose is to solve the violation for those new node data that is more than the nodePtr data
   }
 }
 
