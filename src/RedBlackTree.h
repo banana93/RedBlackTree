@@ -11,5 +11,7 @@ void solveViolationForNewNodeLessThan(Node **nodePtr);
 void solveViolationForNewNodeMoreThan(Node **nodePtr);
 void solveViolationFor4NodeLessThan(Node **nodePtr);
 void solveViolationFor4NodeMoreThan(Node **nodePtr);
+Node *delRedBlackTree(Node **nodePtr, Node *newNode);
+Node *_delRedBlackTree(Node **nodePtr, Node *newNode);
 
 #endif // RedBlackTree_H

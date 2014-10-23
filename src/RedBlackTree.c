@@ -100,3 +100,26 @@ void solveViolationFor4NodeMoreThan(Node **nodePtr)
         }
     }
 }
+
+Node *delRedBlackTree(Node **nodePtr, Node *newNode)
+{
+  Node *node = _delRedBlackTree(nodePtr, newNode);
+  
+  if((*nodePtr) != NULL)
+    (*nodePtr)->color = 'b';
+  
+  return node;
+}
+
+Node *_delRedBlackTree(Node **nodePtr, Node *newNode)
+{
+  Node *node = *nodePtr;
+  
+  if(node == NULL)
+    return;
+  
+  if((*nodePtr)->data == newNode->data) 
+    
+  
+  
+}
