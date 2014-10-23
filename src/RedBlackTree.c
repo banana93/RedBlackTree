@@ -8,7 +8,6 @@ void addRedBlackTree(Node **nodePtr, Node *newNode)
 {
   _addRedBlackTree(nodePtr, newNode);
   (*nodePtr)->color = 'b';
-  
 }
 
 void _addRedBlackTree(Node **nodePtr, Node *newNode)
@@ -23,41 +22,81 @@ void _addRedBlackTree(Node **nodePtr, Node *newNode)
   {
     _addRedBlackTree(&(*nodePtr)->left, newNode);
     solveViolationForNewNodeLessThan(&(*nodePtr)); // this function purpose is to solve the violation for those new node data that is less than the nodePtr data
+    solveViolationFor4NodeLessThan(&(*nodePtr));
   }
   
   else
   {
     _addRedBlackTree(&(*nodePtr)->right, newNode); 
     solveViolationForNewNodeMoreThan(&(*nodePtr)); // this function purpose is to solve the violation for those new node data that is more than the nodePtr data
+    solveViolationFor4NodeMoreThan(&(*nodePtr));
   }
 }
 
 void solveViolationForNewNodeLessThan(Node **nodePtr)
 {
   if((*nodePtr)->left->left != NULL) {
-    if((*nodePtr)->left->color == 'r' && (*nodePtr)->left->left->color == 'r') {
+    if(((*nodePtr)->left->color == 'r' && (*nodePtr)->left->left->color == 'r' && (*nodePtr)->right == NULL) ||
+       ((*nodePtr)->left->color == 'r' && (*nodePtr)->left->left->color == 'r' && (*nodePtr)->right->color == 'b')) {
       rightRotate(&(*nodePtr));
       (*nodePtr)->right->color = 'r';
     }
   } else if((*nodePtr)->left->right != NULL) {
-      if((*nodePtr)->left->color == 'r' && (*nodePtr)->left->right->color == 'r') {
+      if(((*nodePtr)->left->color == 'r' && (*nodePtr)->left->right->color == 'r' && (*nodePtr)->right == NULL) ||
+        ((*nodePtr)->left->color == 'r' && (*nodePtr)->left->right->color == 'r' && (*nodePtr)->right->color == 'b')) {
         leftRightRotate(&(*nodePtr));
         (*nodePtr)->right->color = 'r';
-     }
-   } 
+      }
+    } 
 }
 
 void solveViolationForNewNodeMoreThan(Node **nodePtr)
 {
   if((*nodePtr)->right->right != NULL) {
-    if((*nodePtr)->right->color == 'r' && (*nodePtr)->right->right->color == 'r') {
+    if(((*nodePtr)->right->color == 'r' && (*nodePtr)->right->right->color == 'r' && (*nodePtr)->left == NULL) ||
+      ((*nodePtr)->right->color == 'r' && (*nodePtr)->right->right->color == 'r' && (*nodePtr)->left->color == 'b')){
       leftRotate(&(*nodePtr));
       (*nodePtr)->left->color = 'r';
     } 
   } else if ((*nodePtr)->right->left != NULL) {
-      if((*nodePtr)->right->color == 'r' && (*nodePtr)->right->left->color == 'r') {
+      if(((*nodePtr)->right->color == 'r' && (*nodePtr)->right->left->color == 'r' && (*nodePtr)->left == NULL) || 
+        ((*nodePtr)->right->color == 'r' && (*nodePtr)->right->left->color == 'r' && (*nodePtr)->left->color == 'b')){
         rightLeftRotate(&(*nodePtr));
         (*nodePtr)->left->color = 'r';
       }
    }
 }  
+
+void solveViolationFor4NodeLessThan(Node **nodePtr)
+{
+  if((*nodePtr)->left->left != NULL && (*nodePtr)->right != NULL) {
+    if((*nodePtr)->left->color == 'r' && (*nodePtr)->right->color == 'r' && (*nodePtr)->left->left->color == 'r') {
+      (*nodePtr)->left->color = 'b';
+      (*nodePtr)->right->color = 'b';
+      (*nodePtr)->color = 'r';
+    }
+  } else if((*nodePtr)->left->right != NULL && (*nodePtr)->right != NULL) {
+      if((*nodePtr)->left->color == 'r' && (*nodePtr)->right->color == 'r' && (*nodePtr)->left->right->color == 'r') {
+        (*nodePtr)->left->color = 'b';
+        (*nodePtr)->right->color = 'b';
+        (*nodePtr)->color = 'r';
+      }
+    }
+}
+
+void solveViolationFor4NodeMoreThan(Node **nodePtr)
+{
+  if((*nodePtr)->right->left != NULL && (*nodePtr)->left != NULL) {
+    if((*nodePtr)->right->color == 'r' && (*nodePtr)->left->color == 'r' && (*nodePtr)->right->left->color == 'r') {
+      (*nodePtr)->left->color = 'b';
+      (*nodePtr)->right->color = 'b';
+      (*nodePtr)->color = 'r';
+    } 
+  } else if((*nodePtr)->right->right != NULL && (*nodePtr)->left != NULL) {
+        if((*nodePtr)->right->color == 'r' && (*nodePtr)->left->color == 'r' && (*nodePtr)->right->right->color == 'r') {
+          (*nodePtr)->left->color = 'b';
+          (*nodePtr)->right->color = 'b';
+          (*nodePtr)->color = 'r';
+        }
+    }
+}
