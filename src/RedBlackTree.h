@@ -7,11 +7,13 @@
 
 void addRedBlackTree(Node **nodePtr, Node *newNode);
 void _addRedBlackTree(Node **nodePtr, Node *newNode);
-void solveViolationForNewNodeLessThan(Node **nodePtr);
-void solveViolationForNewNodeMoreThan(Node **nodePtr);
-void solveViolationFor4NodeLessThan(Node **nodePtr);
-void solveViolationFor4NodeMoreThan(Node **nodePtr);
-Node *delRedBlackTree(Node **nodePtr, Node *newNode);
-Node *_delRedBlackTree(Node **nodePtr, Node *newNode);
+void solveAddViolationForNewNodeLessThan(Node **nodePtr);
+void solveAddViolationForNewNodeMoreThan(Node **nodePtr);
+void solveAddViolationFor4NodeLessThan(Node **nodePtr);
+void solveAddViolationFor4NodeMoreThan(Node **nodePtr);
+Node *delRedBlackTree(Node **nodePtr, Node *delNode);
+Node *_delRedBlackTree(Node **nodePtr, Node *delNode);
+void solveRemoveViolationFor3Nodes(Node **nodePtr);
+void solveRemoveViolationFor4Nodes(Node **nodePtr);
 
 #endif // RedBlackTree_H
