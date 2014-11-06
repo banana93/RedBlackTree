@@ -238,11 +238,13 @@ Node *_delRedBlackTree(Node **nodePtr, Node *delNode)
         node = _delRedBlackTree(&tempNode->left, delNode);
       }
   
-  solveRemoveViolation(nodePtr);
+  solveCase1RemoveViolation(nodePtr);
+  solveCase2RemoveViolation(nodePtr);
+  solveCase3RemoveViolation(nodePtr);
   return node;
 }
 
-void solveRemoveViolation(Node **nodePtr)
+void solveCase1RemoveViolation(Node **nodePtr)
 { 
   // left hand side 
   if((*nodePtr)->left == NULL && (*nodePtr)->right->right != NULL) {
@@ -261,14 +263,7 @@ void solveRemoveViolation(Node **nodePtr)
         (*nodePtr)->right->color = 'b';
         (*nodePtr)->color = 'b';
       }
-    } else if((*nodePtr)->left == NULL && (*nodePtr)->right != NULL) {
-        if((*nodePtr)->color == 'b' && (*nodePtr)->right->color == 'b') {
-          
-          (*nodePtr)->color = 'b';
-          (*nodePtr)->right->color = 'r';
-        
-        } 
-      } 
+    }
         
   // right hand side
   if((*nodePtr)->right == NULL && (*nodePtr)->left->left != NULL) {
@@ -288,14 +283,46 @@ void solveRemoveViolation(Node **nodePtr)
         (*nodePtr)->right->color = 'b';
       
       }
-    } else if((*nodePtr)->right == NULL && (*nodePtr)->left != NULL) {
-            if((*nodePtr)->color == 'b' && (*nodePtr)->left->color == 'b') {
+     } 
+}
+
+void solveCase2RemoveViolation(Node **nodePtr)
+{
+  if((*nodePtr)->left == NULL && (*nodePtr)->right != NULL) {
+    if(((*nodePtr)->color == 'b' && (*nodePtr)->right->color == 'b') ||
+       ((*nodePtr)->color == 'r' && (*nodePtr)->right->color == 'b')) {
+          
+        (*nodePtr)->color = 'b';
+        (*nodePtr)->right->color = 'r';
+        
+    } 
+  } else if((*nodePtr)->right == NULL && (*nodePtr)->left != NULL) {
+            if(((*nodePtr)->color == 'b' && (*nodePtr)->left->color == 'b') ||
+               ((*nodePtr)->color == 'r' && (*nodePtr)->left->color == 'b')) {
               
               (*nodePtr)->color = 'b';
               (*nodePtr)->left->color = 'r';
             
             }
-        }
-    
+    }
+}  
 
+void solveCase3RemoveViolation(Node **nodePtr)
+{
+  if((*nodePtr)->left == NULL && (*nodePtr)->right->right != NULL && (*nodePtr)->right->left != NULL) {
+    if((*nodePtr)->left == NULL && (*nodePtr)->right->color == 'r') {
+      
+      leftRotate(&(*nodePtr));
+      (*nodePtr)->color = 'b';
+      (*nodePtr)->left->color = 'r';
+    }
+  } else if((*nodePtr)->right == NULL && (*nodePtr)->left->left != NULL && (*nodePtr)->left->right != NULL) {
+      if((*nodePtr)->right == NULL && (*nodePtr)->left->color == 'r') {
+        
+        rightRotate(&(*nodePtr));
+        (*nodePtr)->color = 'b';
+        (*nodePtr)->right->color = 'r';
+        
+      }
+    }
 }
