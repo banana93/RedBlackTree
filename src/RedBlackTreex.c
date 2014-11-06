@@ -127,7 +127,7 @@ Node *delRedBlackTree(Node **nodePtr, Node *delNode)
   return node;
 }
 
-Node *_delRedBlackTreeX(Node **nodePtr, Node *delNode)
+Node *_delRedBlackTree(Node **nodePtr, Node *delNode)
 {
   Node *tempNode = *nodePtr;
   Node *node;
@@ -218,84 +218,4 @@ void solveRemoveViolationFor4Nodes(Node **nodePtr)
           
           }
   }
-}
-
-Node *_delRedBlackTree(Node **nodePtr, Node *delNode)
-{
-  Node *tempNode = *nodePtr;
-  Node *node;
-  
-  if(tempNode == NULL)
-    Throw(ERR_NODE_UNAVAILABLE);
-  
-  if(tempNode->data == delNode->data) {
-    *nodePtr = NULL;
-    tempNode->color = 'd';
-    return tempNode;
-  } else if(tempNode->data < delNode->data) {
-      node = _delRedBlackTree(&tempNode->right, delNode); 
-    } else if (tempNode->data > delNode->data) { 
-        node = _delRedBlackTree(&tempNode->left, delNode);
-      }
-  
-  solveRemoveViolation(nodePtr);
-  return node;
-}
-
-void solveRemoveViolation(Node **nodePtr)
-{ 
-  // left hand side 
-  if((*nodePtr)->left == NULL && (*nodePtr)->right->right != NULL) {
-    if((*nodePtr)->right->color == 'b' && (*nodePtr)->right->right->color == 'r') {
-    
-      leftRotate(&(*nodePtr));
-      (*nodePtr)->left->color = 'b';
-      (*nodePtr)->right->color = 'b';
-      
-    } 
-  } else if((*nodePtr)->left == NULL && (*nodePtr)->right->left != NULL) {
-      if((*nodePtr)->right->color == 'b' && (*nodePtr)->right->left->color == 'r') {
-        
-        rightLeftRotate(&(*nodePtr));
-        (*nodePtr)->left->color = 'b';
-        (*nodePtr)->right->color = 'b';
-        (*nodePtr)->color = 'b';
-      }
-    } else if((*nodePtr)->left == NULL && (*nodePtr)->right != NULL) {
-        if((*nodePtr)->color == 'b' && (*nodePtr)->right->color == 'b') {
-          
-          (*nodePtr)->color = 'b';
-          (*nodePtr)->right->color = 'r';
-        
-        } 
-      } 
-        
-  // right hand side
-  if((*nodePtr)->right == NULL && (*nodePtr)->left->left != NULL) {
-    if((*nodePtr)->left->color == 'b' && (*nodePtr)->left->left->color == 'r') {
-      
-      rightRotate(&(*nodePtr));
-      (*nodePtr)->left->color = 'b';
-      (*nodePtr)->right->color = 'b';
-    
-    }
-  } else if((*nodePtr)->right == NULL && (*nodePtr)->left->right != NULL) {
-      if((*nodePtr)->left->color == 'b' && (*nodePtr)->left->right->color == 'r') {
-        
-        leftRightRotate(&(*nodePtr));
-        (*nodePtr)->color = 'b';
-        (*nodePtr)->left->color = 'b';
-        (*nodePtr)->right->color = 'b';
-      
-      }
-    } else if((*nodePtr)->right == NULL && (*nodePtr)->left != NULL) {
-            if((*nodePtr)->color == 'b' && (*nodePtr)->left->color == 'b') {
-              
-              (*nodePtr)->color = 'b';
-              (*nodePtr)->left->color = 'r';
-            
-            }
-        }
-    
-
 }

@@ -15,5 +15,10 @@ Node *delRedBlackTree(Node **nodePtr, Node *delNode);
 Node *_delRedBlackTree(Node **nodePtr, Node *delNode);
 void solveRemoveViolationFor3Nodes(Node **nodePtr);
 void solveRemoveViolationFor4Nodes(Node **nodePtr);
+Node *_delRedBlackTreeX(Node **nodePtr, Node *delNode);
+int isRed(Node **nodePtr);
+int isBlack(Node **nodePtr);
+int isDoubleBlack(Node **nodePtr);
+void solveRemoveViolation(Node **nodePtr);
 
 #endif // RedBlackTree_H
