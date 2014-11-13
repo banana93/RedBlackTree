@@ -19,8 +19,12 @@ Node *_delRedBlackTreeX(Node **nodePtr, Node *delNode);
 int isRed(Node **nodePtr);
 int isBlack(Node **nodePtr);
 int isDoubleBlack(Node **nodePtr);
-void solveCase1RemoveViolation(Node **nodePtr);
-void solveCase2RemoveViolation(Node **nodePtr);
-void solveCase3RemoveViolation(Node **nodePtr);
+void caseSelect(Node **nodePtr);
+void solveCase1LeftRemoveViolation(Node **nodePtr);
+void solveCase1RightRemoveViolation(Node **nodePtr);
+void solveCase2LeftRemoveViolation(Node **nodePtr);
+void solveCase2RightRemoveViolation(Node **nodePtr);
+void solveCase3LeftRemoveViolation(Node **nodePtr);
+void solveCase3RightRemoveViolation(Node **nodePtr);
 
 #endif // RedBlackTree_H
