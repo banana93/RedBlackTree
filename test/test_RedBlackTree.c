@@ -463,5 +463,4 @@ void test_delRedBlackTree_3_node_combination_test_remove_20_from_tree_with_root_
     TEST_ASSERT_EQUAL_NODE(NULL , NULL, 'b', &node2);
         
     TEST_ASSERT_EQUAL_NODE(NULL , NULL, 'b', &node15);
-    
 }
