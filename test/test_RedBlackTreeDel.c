@@ -125,7 +125,7 @@ void test_delRedBlackTree_remove_1_from_tree_with_2_1_3_nodes(void)
   setNode(&node2, &node1, &node3, 'b');
   Node *root = &node2;
   
-  delRedBlackTree(&root, &node1);
+  _delRedBlackTree(&root, &node1);
   
   TEST_ASSERT_EQUAL_PTR(root, &node2);
   TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'r', &node3);
@@ -253,7 +253,7 @@ void test_delRedBlackTree_remove_6_from_tree_with_1_2_3_5_6_nodes(void)
   setNode(&node1, NULL, NULL, 'b');
   setNode(&node3, NULL, NULL, 'b');
   setNode(&node6, NULL, NULL, 'b');
-  setNode(&node2, &node1, &node3, 'b');
+  setNode(&node2, &node1, &node3, 'r');
   setNode(&node5, &node2, &node6, 'b');
   Node *root = &node5;
   
@@ -281,7 +281,7 @@ void test_delRedBlackTree_remove_1_from_tree_with_1_2_3_5_6_nodes(void)
   setNode(&node1, NULL, NULL, 'b');
   setNode(&node3, NULL, NULL, 'b');
   setNode(&node6, NULL, NULL, 'b');
-  setNode(&node2, &node1, &node3, 'b');
+  setNode(&node2, &node1, &node3, 'r');
   setNode(&node5, &node2, &node6, 'b');
   Node *root = &node5;
   
@@ -309,7 +309,7 @@ void test_delRedBlackTree_remove_3_from_tree_with_1_2_3_5_6_nodes(void)
   setNode(&node1, NULL, NULL, 'b');
   setNode(&node3, NULL, NULL, 'b');
   setNode(&node6, NULL, NULL, 'b');
-  setNode(&node2, &node1, &node3, 'b');
+  setNode(&node2, &node1, &node3, 'r');
   setNode(&node5, &node2, &node6, 'b');
   Node *root = &node5;
   

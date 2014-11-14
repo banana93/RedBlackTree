@@ -73,9 +73,11 @@ void test_isDoubleBlack_given_a_node_with_double_black_color_should_return_1(voi
 {
   int result;
   setNode(&node4, NULL, NULL, 'd');
+  setNode(&node3, NULL, NULL, 'b');
   Node *root = &node4;
+  Node *removeNode = &node3;
   
-  result = isDoubleBlack(&root);
+  result = isDoubleBlack(&root, removeNode);
   TEST_ASSERT_EQUAL(1, result);
 }
 
@@ -83,9 +85,11 @@ void test_isDoubleBlack_given_a_node_with_black_color_should_return_0(void)
 {
   int result;
   setNode(&node4, NULL, NULL, 'b');
+  setNode(&node3, NULL, NULL, 'r');
   Node *root = &node4;
+  Node *removeNode = &node3;
   
-  result = isDoubleBlack(&root);
+  result = isDoubleBlack(&root, removeNode);
   TEST_ASSERT_EQUAL(0, result);
 }
   
@@ -93,7 +97,7 @@ void test_isDoubleBlack_given_a_node_with_black_color_should_return_0(void)
  *          root                         root                     root
  *           |                            |                        |
  *           v                            v        left            v
- *          2(b)          remove 1       2(b)     rotate          4(b)
+ *          2(r)          remove 1       2(r)     rotate          4(r)
  *         /   \        ------------>      \     --------->      /   \
  *      1(b)   4(b)                        4(b)               2(b)    5(b)
  *                \                          \
@@ -104,7 +108,7 @@ void test_delRedBlackTree_remove_1_from_tree_with_1_2_4_5_nodes(void)
   setNode(&node1, NULL, NULL, 'b');
   setNode(&node5, NULL, NULL, 'r');
   setNode(&node4, NULL, &node5, 'b');
-  setNode(&node2, &node1, &node4, 'b');
+  setNode(&node2, &node1, &node4, 'r');
   Node *root = &node2;
   Node *result;
   
@@ -114,7 +118,7 @@ void test_delRedBlackTree_remove_1_from_tree_with_1_2_4_5_nodes(void)
   TEST_ASSERT_EQUAL_PTR(root, &node4);
   TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'b', &node2);
   TEST_ASSERT_EQUAL_NODE(NULL, NULL, 'b', &node5);
-  TEST_ASSERT_EQUAL_NODE(&node2, &node5, 'b', &node4);
+  TEST_ASSERT_EQUAL_NODE(&node2, &node5, 'r', &node4);
 }
 
 /**
@@ -317,7 +321,7 @@ void test__delRedBlackTree_remove_1_from_tree_with_1_2_3_4_5_nodes(void)
   Node *root = &node2;
   Node *result;
   
-  result = _delRedBlackTree(&root, &node1);
+  result = delRedBlackTree(&root, &node1);
   
   TEST_ASSERT_EQUAL_PTR(root, &node4);
   TEST_ASSERT_EQUAL_PTR(result, &node1);
@@ -347,7 +351,7 @@ void test__delRedBlackTree_remove_6_from_tree_with_2_3_4_5_6_nodes(void)
   Node *root = &node5;
   Node *result;
   
-  result = _delRedBlackTree(&root, &node6);
+  result = delRedBlackTree(&root, &node6);
   
   TEST_ASSERT_EQUAL_PTR(root, &node3);
   TEST_ASSERT_EQUAL_PTR(result, &node6);
@@ -380,7 +384,7 @@ void test__delRedBlackTree_remove_1_from_tree_with_1_2_3_4_5_6_nodes_by_using_ca
   Node *root = &node2;
   Node *result;
   
-  result = _delRedBlackTree(&root, &node1);
+  result = delRedBlackTree(&root, &node1);
   
   TEST_ASSERT_EQUAL_PTR(root, &node5);
   TEST_ASSERT_EQUAL_PTR(result, &node1);
@@ -423,10 +427,6 @@ void test_delRedBlackTree_3_node_remove_20_from_tree_with_root_15_root_should_po
     TEST_ASSERT_EQUAL_NODE(&node2, &node15 , 'b', &node5);
     
 }
-
-
-
-
 
 /* 
  * 
