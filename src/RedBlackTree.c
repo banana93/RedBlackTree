@@ -237,7 +237,7 @@ Node *_delRedBlackTree(Node **nodePtr, Node *delNode)
         node = _delRedBlackTree(&tempNode->left, delNode);
       }
       
-  caseSelect(nodePtr, delNode);
+  checkCase(nodePtr, delNode);
   
   return node;
 }
@@ -277,7 +277,7 @@ int isDoubleBlack(Node **nodePtr, Node *removeNode)
       }  
 }
 
-void caseSelect(Node **nodePtr, Node *removeNode)
+void checkCase(Node **nodePtr, Node *removeNode)
 {
   // Solve Case Right Hand Side 
   if(isDoubleBlack((&(*nodePtr)->left), removeNode)){
@@ -363,13 +363,36 @@ void solveCase3LeftRemoveViolation(Node **nodePtr, Node *removeNode)
   rightRotate(&(*nodePtr));
   (*nodePtr)->right->color = 'r';
 
-  caseSelect((&(*nodePtr)->right), removeNode);
+  checkCase((&(*nodePtr)->right), removeNode);
 }
 
 void solveCase3RightRemoveViolation(Node **nodePtr, Node *removeNode)
 {
   leftRotate(&(*nodePtr));
   (*nodePtr)->left->color = 'r';
-  caseSelect((&(*nodePtr)->left), removeNode);
+  checkCase((&(*nodePtr)->left), removeNode);
+}
+
+Node *removeNextLargerSuccessor(Node **nodePtr)
+{
+  Node *leftNode, *rightNode;
+  Node *node = *nodePtr;
+  
+  if(node->left == NULL) {
+    if(node->right != NULL) {
+      rightNode = node->right;
+      node->right = NULL;
+      *nodePtr = rightNode;
+      rightNode->color = 'b';
+    } else {
+        (*nodePtr) = NULL;
+        return node;
+      }
+  } else if (node->left != NULL) {
+      node = removeNextLargerSuccessor(&node->left);
+    }
+      
+  
+  return node;
   
 }

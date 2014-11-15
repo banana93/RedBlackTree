@@ -29,6 +29,9 @@ void setUp(void){
 
 void tearDown(void){}
 
+/**
+ *  This test code is also part of the delRedBlackTree() 
+ */
 void test_isRed_given_a_node_with_red_color_should_return_1(void) 
 {
   int result;
