@@ -271,9 +271,31 @@ int isBlack(Node **nodePtr)
      
 }
 
+/**
+* Note: x == not possible
+*	node          removed node        return
+*	-----------------------------------------
+*	NULL            NULL                x
+*	NULL            red                 0
+*	NULL            black               1
+*	NULL            double black        x
+*	red             NULL                x
+*	red             red                 0
+*	red             black               0
+*	red             double black        x
+*	black           NULL                x
+*	black           red                 0
+*	black           black               0
+*	black           double black        x
+*	double black    NULL                x
+*	double black    red                 1
+*	double black    black               1
+*	double black    double black        x
+*/
 int isDoubleBlack(Node **nodePtr, Node *removeNode) 
 {
-  if((*nodePtr) != NULL && (*nodePtr)->color == 'd'){
+  if(((*nodePtr) != NULL && (*nodePtr)->color == 'd' && removeNode->color == 'r') ||
+     ((*nodePtr) != NULL && (*nodePtr)->color == 'd' && removeNode->color == 'b')){
       return 1;
   } else if((*nodePtr) == NULL && removeNode->color == 'b'){
         return 1;
@@ -284,31 +306,33 @@ int isDoubleBlack(Node **nodePtr, Node *removeNode)
 
 void checkCase(Node **nodePtr, Node *removeNode)
 {
-  // Solve Case Right Hand Side 
-  if(isDoubleBlack((&(*nodePtr)->left), removeNode)){
-    // Case 1
-    if((isBlack(&(*nodePtr)->right) && isRed(&(*nodePtr)->right->right)) ||
-      (isBlack(&(*nodePtr)->right) && isRed(&(*nodePtr)->right->left)))
-        solveCase1RightRemoveViolation(nodePtr, removeNode);
-    // Case 2
-    else if(isBlack(&(*nodePtr)->right) && isBlack(&(*nodePtr)->right->right) && isBlack(&(*nodePtr)->right->left)) 
-        solveCase2RightRemoveViolation(nodePtr, removeNode);
-    // Case 3
-    else if(isRed(&(*nodePtr)->right))
-        solveCase3RightRemoveViolation(nodePtr, removeNode);
-  }
-  // Solve Case Left Hand Side
-  else if(isDoubleBlack((&(*nodePtr)->right), removeNode)){
-    // Case 1
-    if((isBlack(&(*nodePtr)->left) && isRed(&(*nodePtr)->left->left)) ||
-       (isBlack(&(*nodePtr)->left) && isRed(&(*nodePtr)->left->right)))
-          solveCase1LeftRemoveViolation(nodePtr, removeNode);
-    // Case 2
-    else if(isBlack(&(*nodePtr)->left) && isBlack(&(*nodePtr)->left->left) && isBlack(&(*nodePtr)->left->right))
-          solveCase2LeftRemoveViolation(nodePtr, removeNode);
-    // Case 3
-    else if(isRed(&(*nodePtr)->left)) 
-          solveCase3LeftRemoveViolation(nodePtr, removeNode);
+  if((*nodePtr)->left != NULL || (*nodePtr)->right != NULL) {
+    // Solve Case Right Hand Side 
+    if(isDoubleBlack((&(*nodePtr)->left), removeNode)){
+      // Case 1
+      if((isBlack(&(*nodePtr)->right) && isRed(&(*nodePtr)->right->right)) ||
+        (isBlack(&(*nodePtr)->right) && isRed(&(*nodePtr)->right->left)))
+          solveCase1RightRemoveViolation(nodePtr, removeNode);
+      // Case 2
+      else if(isBlack(&(*nodePtr)->right) && isBlack(&(*nodePtr)->right->right) && isBlack(&(*nodePtr)->right->left))
+          solveCase2RightRemoveViolation(nodePtr, removeNode);
+      // Case 3
+      else if(isRed(&(*nodePtr)->right))
+          solveCase3RightRemoveViolation(nodePtr, removeNode);
+    }
+    // Solve Case Left Hand Side
+    else if(isDoubleBlack((&(*nodePtr)->right), removeNode)){
+      // Case 1
+      if((isBlack(&(*nodePtr)->left) && isRed(&(*nodePtr)->left->left)) ||
+        (isBlack(&(*nodePtr)->left) && isRed(&(*nodePtr)->left->right)))
+            solveCase1LeftRemoveViolation(nodePtr, removeNode);
+      // Case 2
+      else if(isBlack(&(*nodePtr)->left) && isBlack(&(*nodePtr)->left->left) && isBlack(&(*nodePtr)->left->right))
+            solveCase2LeftRemoveViolation(nodePtr, removeNode);
+      // Case 3
+      else if(isRed(&(*nodePtr)->left)) 
+            solveCase3LeftRemoveViolation(nodePtr, removeNode);
+    }
   }
 }
 
@@ -398,13 +422,12 @@ Node *removeNextLargerSuccessor(Node **nodePtr)
       if(node->left != NULL) {
         node = removeNextLargerSuccessor(&node->left);
       } else if(node->right != NULL) {
-          rightNode = node->right;
-          *nodePtr = rightNode;
-          node->right = NULL;
-          node->color = 'b';
+          (*nodePtr) = (*nodePtr)->right;
+          (*nodePtr)->right = NULL;
+          (*nodePtr)->color = 'b';
         }
     } 
-     
+    
   checkCase(&(*nodePtr), node);
   
   return node;
